@@ -12,7 +12,7 @@ const fontSans = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "CarePulse",
+  title: "HealthPulse",
   description: "A healthcare management application",
 };
 
@@ -28,6 +28,7 @@ export default function RootLayout({
           "min-h-screen bg-dark-300 font-sans antialiased",
           fontSans.variable
         )}
+        suppressHydrationWarning={true}
       >
         <ThemeProvider attribute='class' defaultTheme='dark'>
           {children}
