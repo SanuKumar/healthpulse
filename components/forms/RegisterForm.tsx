@@ -22,7 +22,7 @@ export enum FormFieldType {
   SKELETON = "skeleton",
 }
 
-const PatientForm = () => {
+const RegisterForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
@@ -91,4 +91,4 @@ const PatientForm = () => {
   );
 };
 
-export default PatientForm;
+export default RegisterForm;
