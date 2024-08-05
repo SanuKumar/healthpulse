@@ -19,7 +19,6 @@ import { InputFile } from "node-appwrite/file";
 export const createUser = async (user: CreateUserParams) => {
   try {
     // Create new user -> https://appwrite.io/docs/references/1.5.x/server-nodejs/users#create
-    console.log("Creating new user:", users);
     const newuser = await users.create(
       ID.unique(),
       user.email,

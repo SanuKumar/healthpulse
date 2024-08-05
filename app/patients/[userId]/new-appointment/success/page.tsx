@@ -14,13 +14,10 @@ const Success = async ({
 }: SearchParamProps) => {
   const appointmentId = (searchParams?.appointmentId as string) || "";
   const appointment = await getAppointment(appointmentId);
-  console.log(appointment);
 
   const doctor = Doctors.find(
     (doc) => doc.name === appointment.primaryPhysician
   );
-
-  console.log(doctor);
 
   return (
     <div className='flex h-screen max-h-screen px-[5%]'>

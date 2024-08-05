@@ -8,11 +8,11 @@ import {
 } from "../appwrite.config";
 import { parseStringify } from "../utils";
 import { Appointment } from "@/types/appwrite.types";
+import { revalidatePath } from "next/cache";
 
 export const createAppointment = async (
   appointment: CreateAppointmentParams
 ) => {
-  console.log("appointment", appointment);
   try {
     const newAppointment = await databases.createDocument(
       DATABASE_ID!,
@@ -20,7 +20,6 @@ export const createAppointment = async (
       ID.unique(),
       appointment
     );
-    console.log("newAppointment", newAppointment);
     return parseStringify(newAppointment);
   } catch (error) {
     console.log(error);
@@ -46,13 +45,14 @@ export const getRecentAppointmentList = async () => {
     const appointments = await databases.listDocuments(
       DATABASE_ID!,
       APPOINTMENT_COLLECTION_ID!,
-      [Query.orderDesc(`$createdAt`)]
+      [Query.orderDesc("$createdAt")]
     );
     const initialCounts = {
       scheduledCount: 0,
       pendingCount: 0,
       cancelledCount: 0,
     };
+    console.log("appointments", appointments);
     const counts = (appointments.documents as Appointment[]).reduce(
       (acc, appointment) => {
         if (appointment.status === "scheduled") {
@@ -75,17 +75,34 @@ export const getRecentAppointmentList = async () => {
     };
     return parseStringify(data);
   } catch (error) {
-    console.log(error);
+    console.error(
+      "An error occurred while retrieving the recent appointments:",
+      error
+    );
   }
 };
 
-export const udpdateAppointment = async ({
+export const updateAppointment = async ({
   appointmentId,
   userId,
-  apointment,
+  appointment,
   type,
 }: UpdateAppointmentParams) => {
   try {
+    const updatedAppointment = await databases.updateDocument(
+      DATABASE_ID!,
+      APPOINTMENT_COLLECTION_ID!,
+      appointmentId,
+      appointment
+    );
+    if (!updatedAppointment) {
+      throw new Error("Appointment not found");
+    }
+
+    //TODO: SMS Notification
+
+    revalidatePath("/admin");
+    return parseStringify(updatedAppointment);
   } catch (error) {
     console.log(error);
   }
