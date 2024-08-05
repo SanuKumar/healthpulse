@@ -42,3 +42,7 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 <!-- http://localhost:3000/patients/66a41174003a7f343718/new-appointment -->
 
 <!-- http://localhost:3000/patients/66a41174003a7f343718/new-appointment/success?appointmentId=66a56f050012e12dbe08 -->
+
+### Shadcn Package Installation
+
+<!-- npx shadcn-ui@latest add {package Name} -->
